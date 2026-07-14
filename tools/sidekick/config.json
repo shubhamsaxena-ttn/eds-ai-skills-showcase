@@ -1,0 +1,10 @@
+{
+    "plugins": [
+      {
+        "id": "aem-genai-variations",
+        "title": "Generate Variations",
+        "environments": ["edit", "preview", "live"],
+        "url": "/tools/sidekick/aem-genai-variations.js"
+      }
+    ]
+  }
