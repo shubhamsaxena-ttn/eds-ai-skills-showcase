@@ -1,0 +1,152 @@
+main .pricing-grid {
+  padding: 2rem 1rem;
+}
+
+main .pricing-grid-toggle {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  margin: 0 auto 2rem;
+  border: 1px solid var(--dark-color);
+  border-radius: 2em;
+  padding: 4px;
+  width: fit-content;
+}
+
+main .pricing-grid-toggle-option {
+  border: none;
+  background: transparent;
+  padding: 0.5em 1.5em;
+  border-radius: 2em;
+  cursor: pointer;
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+main .pricing-grid-toggle-option[aria-pressed="true"] {
+  background: var(--text-color);
+  color: var(--background-color);
+}
+
+main .pricing-grid-toggle-option:focus-visible {
+  outline: 2px solid var(--link-color);
+  outline-offset: 2px;
+}
+
+main .pricing-grid-tiers {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1.5rem;
+}
+
+main .pricing-grid-tier {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #dadada;
+  border-radius: 8px;
+  padding: 1.5rem;
+  background-color: var(--background-color);
+}
+
+main .pricing-grid-tier.featured {
+  border-color: var(--link-color);
+  box-shadow: 0 4px 24px rgb(59 99 251 / 15%);
+}
+
+main .pricing-grid-badge {
+  display: inline-block;
+  background-color: var(--link-color);
+  color: var(--background-color);
+  font-size: var(--body-font-size-xs);
+  font-weight: 600;
+  padding: 0.25em 0.75em;
+  border-radius: 1em;
+  margin-block: 0.5rem;
+}
+
+main .pricing-grid-plan h2,
+main .pricing-grid-plan h3,
+main .pricing-grid-plan h4 {
+  margin: 0 0 0.5rem;
+  font-family: var(--heading-font-family);
+  font-size: var(--heading-font-size-m);
+}
+
+main .pricing-grid-pricing {
+  margin: 1rem 0;
+}
+
+main .pricing-grid-price {
+  font-size: var(--heading-font-size-l);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+main .pricing-grid-price-annual {
+  font-size: var(--heading-font-size-m);
+}
+
+main .pricing-grid-price-annual em {
+  display: block;
+  font-size: var(--body-font-size-xs);
+  font-weight: 400;
+  color: var(--link-color);
+  margin-top: 0.25rem;
+}
+
+main .pricing-grid.monthly .pricing-grid-price-annual {
+  display: none;
+}
+
+main .pricing-grid.annual .pricing-grid-price-monthly {
+  display: none;
+}
+
+main .pricing-grid-features {
+  list-style: none;
+  margin: 0 0 1.5rem;
+  padding: 0;
+  flex: 1;
+}
+
+main .pricing-grid-features li {
+  padding: 0.5rem 0;
+  padding-inline-start: 1.5rem;
+  position: relative;
+}
+
+main .pricing-grid-features li::before {
+  content: '✓';
+  position: absolute;
+  inset-inline-start: 0;
+  color: var(--link-color);
+  font-weight: 700;
+}
+
+main .pricing-grid-details {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+main .pricing-grid-cta {
+  margin-top: auto;
+  text-align: center;
+}
+
+@media (width >= 900px) {
+  main .pricing-grid {
+    padding: 3rem 2rem;
+  }
+
+  main .pricing-grid-tiers {
+    grid-template-columns: repeat(3, 1fr);
+    align-items: stretch;
+  }
+
+  main .pricing-grid-tier.featured {
+    transform: translateY(-0.5rem);
+  }
+}
