@@ -1,17 +1,16 @@
 {
-    "plugins": [
-      {
-        "id": "aem-genai-variations",
-        "title": "Generate Variations",
-        "environments": ["edit", "preview", "live"],
-        "url": "/tools/sidekick/aem-genai-variations.js"
-      },
-      {
-        "id": "openai-metadata-generator",
-        "title": "AI Metadata",
-        "url": "/tools/sidekick/plugins/openai-metadata.js",
-        "container": "menu",
-        "environments": ["edit", "preview", "live"]
-      }
-    ]
-  }
+  "plugins": [
+    {
+      "id": "aem-genai-variations",
+      "title": "Generate Variations",
+      "environments": ["edit", "preview", "live"],
+      "url": "/tools/sidekick/aem-genai-variations.js"
+    },
+    {
+      "id": "openai-metadata-generator",
+      "title": "AI Metadata",
+      "environments": ["dev", "preview", "live"],
+      "event": "openai-metadata"
+    }
+  ]
+}

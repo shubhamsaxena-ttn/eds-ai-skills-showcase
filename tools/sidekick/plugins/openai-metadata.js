@@ -333,55 +333,52 @@ ${content.bodyExcerpt || '(no body content detected)'}`;
     };
   }
 
-  const aiMetadataPlugin = {
-    id: 'openai-metadata-generator',
-    condition: (sidekick) => sidekick.isReady(),
-    button: {
-      text: 'AI Metadata',
-      action: async (evt) => {
-        const key = getApiKey();
-        if (!key) {
-          renderApiKeyModal(() => showToast('API key configured. Click "AI Metadata" again to run.'));
-          return;
-        }
+  async function handleMetadataGenerate() {
+    const key = getApiKey();
+    if (!key) {
+      renderApiKeyModal(() => showToast('API key configured. Click "AI Metadata" again to run.'));
+      return;
+    }
 
-        const button = evt.target;
-        const originalButtonText = button.textContent;
-        button.textContent = 'Generating...';
-        button.disabled = true;
+    showToast('Generating metadata...');
 
-        try {
-          if (!findMetadataBlock()) {
-            throw new Error('No metadata block found on this page. Add a Metadata block to the page first.');
-          }
+    try {
+      if (!findMetadataBlock()) {
+        throw new Error('No metadata block found on this page. Add a Metadata block to the page first.');
+      }
 
-          const content = extractPageContent();
-          if (!content.heading && !content.bodyExcerpt) {
-            showToast('Limited page content detected. Results may be generic.', true);
-          }
+      const content = extractPageContent();
+      if (!content.heading && !content.bodyExcerpt) {
+        showToast('Limited page content detected. Results may be generic.', true);
+      }
 
-          const metadata = await callOpenAIMetadataAPI(key, content);
-          updateMetadataBlock(metadata);
-          renderResultsModal(metadata);
-          showToast('Metadata block updated with AI-generated values.');
-        } catch (error) {
-          // eslint-disable-next-line no-console
-          console.error('Metadata generation failed:', error);
-          if (error.message && error.message.toLowerCase().includes('api key')) {
-            showToast('Authentication failed. Please reset your API key.', true);
-            renderApiKeyModal();
-          } else {
-            showToast(error.message || 'Metadata generation failed.', true);
-          }
-        } finally {
-          button.textContent = originalButtonText;
-          button.disabled = false;
-        }
-      },
-    },
+      const metadata = await callOpenAIMetadataAPI(key, content);
+      updateMetadataBlock(metadata);
+      renderResultsModal(metadata);
+      showToast('Metadata block updated with AI-generated values.');
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error('Metadata generation failed:', error);
+      if (error.message && error.message.toLowerCase().includes('api key')) {
+        showToast('Authentication failed. Please reset your API key.', true);
+        renderApiKeyModal();
+      } else {
+        showToast(error.message || 'Metadata generation failed.', true);
+      }
+    }
+  }
+
+  const bindSidekickEvent = () => {
+    const sidekick = document.querySelector('aem-sidekick, helix-sidekick');
+    if (!sidekick || sidekick.dataset.edsOpenaiMetadataBound) return;
+
+    sidekick.dataset.edsOpenaiMetadataBound = 'true';
+    sidekick.addEventListener('custom:openai-metadata', handleMetadataGenerate);
   };
 
-  window.hlx = window.hlx || {};
-  window.hlx.sidekickPlugins = window.hlx.sidekickPlugins || [];
-  window.hlx.sidekickPlugins.push(aiMetadataPlugin);
+  if (document.querySelector('aem-sidekick, helix-sidekick')) {
+    bindSidekickEvent();
+  } else {
+    document.addEventListener('sidekick-ready', bindSidekickEvent, { once: true });
+  }
 }());
