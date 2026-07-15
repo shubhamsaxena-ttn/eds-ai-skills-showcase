@@ -174,6 +174,10 @@ async function loadLazy(doc) {
   import('../tools/sidekick/aem-genai-variations.js').catch(() => {
     // Plugin is optional; avoid unhandled rejection if the bootstrap fails to load.
   });
+  // Event-based Sidekick plugins (config.json "event") need their handler script on the page.
+  import('../tools/sidekick/plugins/openai-metadata.js').catch(() => {
+    // Plugin is optional; avoid unhandled rejection if the bootstrap fails to load.
+  });
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   loadFonts();
