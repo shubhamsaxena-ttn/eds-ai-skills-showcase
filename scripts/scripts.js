@@ -169,6 +169,11 @@ async function loadLazy(doc) {
   if (hash && element) element.scrollIntoView();
 
   loadFooter(doc.querySelector('footer'));
+  // Preload GenAI Variations MFE on the page — config.json alone does not inject
+  // client.js into document.head; Sidekick needs it in the page context to work.
+  import('../tools/sidekick/aem-genai-variations.js').catch(() => {
+    // Plugin is optional; avoid unhandled rejection if the bootstrap fails to load.
+  });
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   loadFonts();
